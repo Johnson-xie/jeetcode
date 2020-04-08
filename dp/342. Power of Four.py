@@ -29,6 +29,8 @@ class Solution:
 Any other number not it the list should be considered as invalid.
 So if you XOR them altogether, you will get a mask value, which is:
 
+
+后面这个大数迁就上面所有4的倍数的数
 1010101010101010101010101010101 (1431655765)
 
 """
