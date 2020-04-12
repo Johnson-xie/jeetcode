@@ -50,3 +50,16 @@ if __name__ == '__main__':
 
     sol = Solution()
     sol.minimumTotal2(triangle)
+
+
+"""
+1. clarification
+2. possible solutions
+    brute force
+    dp
+3. coding
+4. tests
+
+
+
+"""
