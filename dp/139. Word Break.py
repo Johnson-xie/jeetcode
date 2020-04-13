@@ -1,5 +1,5 @@
 class Solution:
-    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+    def wordBreak(self, s: str, wordDict) -> bool:
         n = len(s)
         dp = [False] * (n + 1)
         dp[0] = True
@@ -19,7 +19,7 @@ class Solution:
 
 """缓存： 所有有return的地方都要加"""
 class Solution2:
-    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+    def wordBreak(self, s: str, wordDict) -> bool:
 
         self.cache = {}
         self.words = set(wordDict)
@@ -48,4 +48,24 @@ class Solution2:
 
         return search(s, 0)
 
+    def wordBreak2(self, s: str, wordDict) -> bool:
 
+        table = set(wordDict)
+
+        dp = [1] + [0] * len(s)
+
+        for i in range(len(s)):
+            if dp[i]:
+                for word in wordDict:
+                    if s[i: i + len(word)] in table:
+                        if i + len(word) >= len(s):
+                            return True
+                        dp[i + len(word)] = 1
+        return dp[-1]
+
+
+if __name__ == '__main__':
+    s = "leetcode"
+    wordDict = ["leet", "code"]
+    sol = Solution2()
+    sol.wordBreak2(s, wordDict)
