@@ -78,3 +78,126 @@ compilation terminated.`
 1. 下载zip安装包，解压拷贝至c盘，设置环境变量
 2. 安装设置windows服务，开机自动自动 `redis-server --service-install redis.windows-service.conf --loglevel verbose` 
 
+## python
+
+* python 指定解释器版本创建虚拟环境 `mkvirtualenv -p c:\\python27\python.exe py27` 
+* pip 镜像源配置 `C:\Users\Administrator\AppData\Roaming\pip` 
+
+```
+[global]
+timeout = 6000
+index-url = https://pypi.tuna.tsinghua.edu.cn/simple
+trusted-host = pypi.tuna.tsinghua.edu.cn
+```
+
+
+
+## python pymysql
+
+***
+
+```
+import pymysql
+import contextlib
+
+# specify db config
+host = "127.0.0.1"
+port = 3306
+db_name = ""
+user = ""
+passwd = ""
+
+
+@contextlib.contextmanager
+def mysql_connect():
+    conn = pymysql.connect(host=host, port=port, user=user, password=passwd, db=db_name, charset='utf8', autocommit=True)
+    cursor = conn.cursor(cursor=pymysql.cursors.DictCursor)
+    try:
+        yield cursor
+    finally:
+        conn.commit()
+        cursor.close()
+        conn.close()
+
+
+if __name__ == '__main__':
+    # for test
+    with mysql_connect() as db:
+        sql = "select * from gateway"
+        db.execute(sql)
+        for row in db.fetchall():
+            print(row)
+
+```
+
+
+
+## centos 安装python3 编译错误
+
+```
+centos6，gcc 4.8.2下出现expecting string instruction after `rep’的错误，解决方法：
+```
+
+```
+wget http://people.centos.org/tru/devtools-2/devtools-2.repo -O /etc/yum.repos.d/devtools-2.repo
+
+yum install devtoolset-2-gcc devtoolset-2-binutils
+
+yum install devtoolset-2-gcc-gfortran
+
+```
+
+```
+安装静态库
+# yum install -y openssl-static
+安装gcc
+# yum install -y gcc wget
+# yum groupinstall "Development tools"
+# yum install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel
+
+1、通过官网下载Python3安装包
+# wget http://python.org/ftp/python/3.6.1/Python-3.6.1.tar.xz
+2、解压安装包
+# tar xf Python-3.6.1.tar.xz
+3、编译安装
+进入Python-3.6.1文件夹下，进行编辑安装
+
+# ./configure --prefix=/usr/local/python3
+# make & make install
+
+添加刚安装的python3版本的文件连接
+# ln -s /usr/local/python3/bin/python3(编译安装目录) /usr/bin/python3
+
+添加pip的文件连接
+查看pip版本信息
+
+# python3 -m pip -V
+pip 9.0.1 from /usr/local/lib/python3.6/site-packages (python 3.6)
+注：如果输出提示没有pip，则执行——五、pip的安装
+添加pip的文件连接
+
+# ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
+查看pip版本信息
+
+# pip3 -V
+pip 9.0.1 from /usr/local/lib/python3.6/site-packages (python 3.6)
+
+```
+
+```
+利用python2 安装virtualenvwrapper
+if [ -f /usr/local/bin/virtualenvwrapper.sh ]; then
+    export WORKON_HOME=$HOME/.virtualenvs
+    source /usr/local/bin/virtualenvwrapper.sh
+fi
+再次读入.bashrc:
+
+$ source ~/.bashrc
+```
+
+
+
+# kafka
+
+***
+
