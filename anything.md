@@ -195,7 +195,57 @@ fi
 $ source ~/.bashrc
 ```
 
+## python urllib
 
+* python2
+
+```
+import urllib2
+
+values = {"username":"962457839@qq.com","password":"XXXX"}
+data = urllib.urlencode(values) 
+url = "https://passport.csdn.net/account/login?from=http://my.csdn.net/my/mycsdn"
+request = urllib2.Request(url,data)
+response = urllib2.urlopen(request)
+print response.read()
+```
+
+* python3
+
+```
+from urllib import request
+from urllib import parse
+from urllib.request import urlopen
+
+values = {'username': '962457839@qq.com', 'password': 'XXXX'}
+data = parse.urlencode(values).encode('utf-8')  # 提交类型不能为str，需要为byte类型
+url = 'https://passport.csdn.net/account/login?from=http://my.csdn.net/my/mycsdn'
+request = request.Request(url, data)
+response = urlopen(request)
+print(response.read().decode())
+```
+
+* python2 打印字典
+
+```
+import json
+a=['阿萨德飞机',123]
+print a
+print json.dumps(a, ensure_ascii=False)
+```
+
+
+
+# vim
+
+***
+
+* yy 赋值整行
+* p复制到当前下一行，P复制到当前光标上一行
+* dd 剪切当前行
+* 末行模式输入：set number
+* /search_chr，回车后可以使用如下操作, n下一个, N上一个
+* 末行模式：`%s/foo/bar/g`会在全局范围(`%`)查找`foo`并替换为`bar`，所有出现都会被替换（`g`）。
 
 # kafka
 
