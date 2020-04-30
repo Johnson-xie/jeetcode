@@ -130,6 +130,16 @@ if __name__ == '__main__':
 
 ```
 
+# how to install Python 3, `pip`, `venv`, `virtualenv`, and `pipenv` on [Red Hat Enterprise Linux](https://developers.redhat.com/products/rhel/overview/) 7   [red hat官方](https://developers.redhat.com/blog/2018/08/13/install-python3-rhel/)
+
+***
+
+```
+yum install rh-python36
+scl enable
+scl enable rh-python36 bash  # 每次进去重新执行
+```
+
 
 
 ## centos 安装python3 编译错误
@@ -231,7 +241,48 @@ print(response.read().decode())
 import json
 a=['阿萨德飞机',123]
 print a
-print json.dumps(a, ensure_ascii=False)
+print json.dumps(a, ensure_ascii=False, encoding="utf-8")
+```
+
+```
+json.loads(data, encoding="utf-8")
+```
+
+* 命令行入参模板
+
+```
+import argparse
+
+#==================================================================
+def make_argparse():
+  ''' change this function for custom command line parameter.'''
+
+  parser = argparse.ArgumentParser()
+
+  # positional argument : parse by sequance , must be exist, 
+  # must in right type , must in right sequance
+  parser.add_argument("name", help="--------")          #default type is string
+  parser.add_argument("tel",  help="--------",type=int) #custorm int type
+
+  # optional argument : parse by key and value, no care 
+  # to sequance , such as "-x=xxxx" or "-x xxxx"
+  parser.add_argument("-o", "--output",  help="--------")
+  parser.add_argument("-v", "--verbosity", help="--------", action="store_true")
+  #This means that, if the option is specified, assign the value True to args.verbosity.
+  # Not specifying it implies False.
+
+  args = parser.parse_args()
+  return args
+#==================================================================
+
+#main code
+args = make_argparse(); 
+print args.name
+print args.tel
+if args.verbosity:
+  print "verbosity turned on"
+if args.output:
+  print "output : " + args.output
 ```
 
 
@@ -247,7 +298,57 @@ print json.dumps(a, ensure_ascii=False)
 * /search_chr，回车后可以使用如下操作, n下一个, N上一个
 * 末行模式：`%s/foo/bar/g`会在全局范围(`%`)查找`foo`并替换为`bar`，所有出现都会被替换（`g`）。
 
+
+
+# windows cmd
+
+***
+
+* `git log --oneline>>sync.log`
+* linux ls > demo.txt
+
 # kafka
 
 ***
+
+
+
+# mysql user permission
+
+***
+
+* 多对多建表
+
+```
+步骤1:创建三张数据表Student ,Course,Stu_Cour
+
+/**学生表*/
+CREATE TABLE student (
+stu_id INT AUTO_INCREMENT,
+NAME VARCHAR(30),
+age INT ,
+class VARCHAR(50),
+address VARCHAR(100),
+PRIMARY KEY(stu_id)
+)
+/*学生课程表*/
+CREATE TABLE Course(
+cour_id INT AUTO_INCREMENT,
+NAME VARCHAR(50),
+CODE VARCHAR(30),
+PRIMARY KEY(cour_id)
+)
+/**学生课程关联表*/
+CREATE TABLE Stu_Cour(
+sc_id INT AUTO_INCREMENT,
+stu_id INT ,
+cour_id INT,
+PRIMARY KEY(sc_id)
+)
+第二步:为Stu_Cour表添加外键
+
+/*添加外键约束*/
+ALTER TABLE Stu_Cour ADD CONSTRAINT stu_FK1 FOREIGN KEY(stu_id) REFERENCES student(stu_id)
+ALTER TABLE Stu_Cour ADD CONSTRAINT cour_FK2 FOREIGN KEY(cour_id) REFERENCES Course(cour_id)
+```
 
